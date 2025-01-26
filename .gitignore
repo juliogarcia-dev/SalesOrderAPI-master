@@ -1,0 +1,19 @@
+# Ignore arquivos e pastas geradas
+bin/
+obj/
+node_modules/
+
+# Ignore arquivos de configuração de usuário
+*.user
+
+# Logs e temporários
+*.log
+*.tmp
+.env
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+appsettings.json
+launchSettings.json

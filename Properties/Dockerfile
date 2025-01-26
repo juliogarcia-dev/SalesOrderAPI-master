@@ -1,13 +1,11 @@
-# Use a imagem base do .NET
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-# Use a imagem do SDK do .NET para construir o projeto
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY ["SalesOrderAPI/SalesOrderAPI.csproj", "SalesOrderAPI/"]
+COPY ["SalesOrderAPI-master/SalesOrderAPI.csproj", "SalesOrderAPI/"]
 RUN dotnet restore "SalesOrderAPI/SalesOrderAPI.csproj"
 COPY . .
 WORKDIR "/src/SalesOrderAPI"
@@ -18,5 +16,5 @@ RUN dotnet publish "SalesOrderAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=publish /app/publish . 
 ENTRYPOINT ["dotnet", "SalesOrderAPI.dll"]

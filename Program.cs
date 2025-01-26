@@ -36,7 +36,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyFrontend", builder =>
-        builder.WithOrigins("https://salesorder-app.vercel.app") // Substitua com o domínio do seu frontend
+        builder.WithOrigins($"{Environment.GetEnvironmentVariable("APP_URL")}") // Domínio do frontend
                .AllowAnyHeader()
                .AllowAnyMethod());
 });
@@ -46,9 +46,10 @@ builder.Services.AddScoped<IItemService, ItemsService>();
 builder.Services.AddScoped<ISalesOrderService, SalesOrdersService>();
 
 var app = builder.Build();
+var IsDevelopment = app.Environment.IsDevelopment();
 
 // 4. Configuração do pipeline de requisição HTTP
-if (app.Environment.IsDevelopment())
+if (IsDevelopment)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -63,6 +64,12 @@ app.MapControllers(); // Mapear os endpoints para os controllers
 
 app.UseCors("AllowMyFrontend");
 
-// Configuração da porta
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Run($"http://0.0.0.0:{port}");
+if (IsDevelopment)
+{
+    app.Run($"http://localhost:5033");
+}
+else
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+    app.Run($"http://0.0.0.0:{port}"); // Configuração da porta
+}

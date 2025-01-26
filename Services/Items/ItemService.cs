@@ -30,6 +30,7 @@ public class ItemsService : IItemService
     public async Task<List<Item>> GetItemsAsync()
     {
         return await _dbContext.Items
+            .OrderBy(i => i.Name)
             .AsNoTracking()
             .ToListAsync();
     }

@@ -63,4 +63,6 @@ app.MapControllers(); // Mapear os endpoints para os controllers
 
 app.UseCors("AllowMyFrontend");
 
-app.Run();
+// Configuração da porta
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://0.0.0.0:{port}");

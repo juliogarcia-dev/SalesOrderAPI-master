@@ -36,7 +36,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowMyFrontend", builder =>
-        builder.WithOrigins("http://localhost:3000") // Substitua com o domínio do seu frontend
+        builder.WithOrigins("https://salesorder-app.vercel.app") // Substitua com o domínio do seu frontend
                .AllowAnyHeader()
                .AllowAnyMethod());
 });

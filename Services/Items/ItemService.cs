@@ -65,5 +65,17 @@ public class ItemsService : IItemService
             _dbContext.Items.Remove(item);
             await _dbContext.SaveChangesAsync();
         }
+    } 
+
+    public async Task<List<Item>> GetNameItemsAsync(string name)
+    {
+        var query = _dbContext.Items.AsQueryable();
+
+        if (!string.IsNullOrEmpty(name))
+        {
+            query = query.Where(item => item.Name != null && item.Name.Contains(name));
+        }
+
+        return await query.ToListAsync();
     }
 }

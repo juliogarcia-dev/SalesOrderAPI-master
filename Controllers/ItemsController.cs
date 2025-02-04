@@ -68,4 +68,11 @@ public class ItemsController : ControllerBase
         await _itemService.DeleteItemAsync(id);         
         return NoContent();
     }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> GetNameItems([FromQuery] string name)
+    {
+        var items = await _itemService.GetNameItemsAsync(name);
+        return Ok(items);
+    }
 }

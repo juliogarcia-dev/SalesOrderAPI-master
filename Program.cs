@@ -45,6 +45,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IItemService, ItemsService>();
 builder.Services.AddScoped<ISalesOrderService, SalesOrdersService>();
 
+// 4. Registrar o serviço de fundo de verificação de saúde da API
+builder.Services.AddHttpClient();  // Necessário para o ApiHealthCheckService
+builder.Services.AddHostedService<ApiHealthCheckService>();
+
 var app = builder.Build();
 var IsDevelopment = app.Environment.IsDevelopment();
 
